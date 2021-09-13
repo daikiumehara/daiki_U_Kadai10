@@ -10,23 +10,22 @@ import RxSwift
 import RxCocoa
 
 class PrefecturesViewModel {
-    private var prefectures = PublishSubject<[String]>()
-    var prefecturesObservable: Observable<[String]> {
-        prefectures.asObserver()
-    }
-    private let model: ModelProtocol
+    private let disposeBag = DisposeBag()
 
-    init(_ model: ModelProtocol) {
+    private var prefecturesRelay = BehaviorRelay<[String]>(value: [])
+    var prefecturesObservable: Observable<[String]> {
+        prefecturesRelay.asObservable()
+    }
+
+    private let model: PrefecturesModelProtocol
+
+    init(_ model: PrefecturesModelProtocol) {
         self.model = model
     }
 
-    func fetchData() {
-        let event = model.fetchDatas()
-        switch event {
-        case .next(let array):
-            self.prefectures.onNext(array)
-        case .error: break
-        case .completed: break
-        }
+    func viewDidLoad() {
+        model.fetchDatas()
+            .bind(to: prefecturesRelay)
+            .disposed(by: disposeBag)
     }
 }
