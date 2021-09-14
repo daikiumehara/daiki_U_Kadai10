@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 protocol ModelProtocol {
-    func fetchDatas() -> Event<[String]>
+    func fetchDatas() -> Observable<[String]>
 }
 
 class PrefecturesModel: ModelProtocol {
@@ -25,7 +25,7 @@ class PrefecturesModel: ModelProtocol {
                          "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県",
                          "鹿児島県", "沖縄県"]
 
-    func fetchDatas() -> Event<[String]> {
-        return .next(datas)
+    func fetchDatas() -> Observable<[String]> {
+        return .just(datas)
     }
 }

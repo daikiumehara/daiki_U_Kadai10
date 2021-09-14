@@ -16,7 +16,7 @@ class PrefectureCell: UITableViewCell {
 
     func configure(name: String, index: Int, color: UIColor) {
         self.nameLabel.text = name
-        self.discriptionLabel.text = "\(index)番目の都道府県です"
+        self.discriptionLabel.text = "\(index+1)番目の都道府県です"
         self.backgroundColor = color
     }
 }
